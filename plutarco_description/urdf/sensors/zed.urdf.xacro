@@ -36,7 +36,7 @@
       <visual>
         <origin xyz="-0.01 0 0" rpy="${-M_PI/2} -${M_PI} ${-M_PI/2}"/>
         <geometry>
-          <mesh filename="package://myzharbot_description/meshes/sensors/stereolabs_zed.STL" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+          <mesh filename="package://plutarco_description/meshes/sensors/stereolabs_zed.STL" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
         </geometry>
         <material name="DarkGrey" />
       </visual>

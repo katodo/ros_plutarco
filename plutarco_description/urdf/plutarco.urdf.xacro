@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<robot name="myzharbot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="plutarco" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Included URDF/XACRO Files -->
-  <xacro:include filename="$(find myzharbot_description)/urdf/materials.urdf" />
-  <xacro:include filename="$(find myzharbot_description)/urdf/passive_sprocket.urdf.xacro" />
-  <xacro:include filename="$(find myzharbot_description)/urdf/active_sprocket.urdf.xacro" />
-  <xacro:include filename="$(find myzharbot_description)/urdf/motor.urdf.xacro" />
-  <xacro:include filename="$(find myzharbot_description)/urdf/sensors/zed.urdf.xacro"/>
-  <xacro:include filename="$(find myzharbot_description)/urdf/sensors/imu.urdf.xacro"/>
+  <xacro:include filename="$(find plutarco_description)/urdf/materials.urdf" />
+  <xacro:include filename="$(find plutarco_description)/urdf/passive_sprocket.urdf.xacro" />
+  <xacro:include filename="$(find plutarco_description)/urdf/active_sprocket.urdf.xacro" />
+  <xacro:include filename="$(find plutarco_description)/urdf/motor.urdf.xacro" />
+  <xacro:include filename="$(find plutarco_description)/urdf/sensors/zed.urdf.xacro"/>
+  <xacro:include filename="$(find plutarco_description)/urdf/sensors/imu.urdf.xacro"/>
   <!-- Included URDF/XACRO Files -->
 
   <!-- Global properties -->
@@ -121,33 +121,33 @@
   <!-- Stereolabs ZED --> 
 
   <!-- Active Sprockets -->
-  <xacro:myzharbot_active_sprocket position="Left">
+  <xacro:plutarco_active_sprocket position="Left">
     <origin xyz="${active_sprocket_offset_x} ${active_sprocket_offset_y} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_active_sprocket>
-  <xacro:myzharbot_active_sprocket position="Right">
+  </xacro:plutarco_active_sprocket>
+  <xacro:plutarco_active_sprocket position="Right">
     <origin xyz="${active_sprocket_offset_x} ${-active_sprocket_offset_y} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_active_sprocket>
-  <xacro:myzharbot_motor position="Left">
+  </xacro:plutarco_active_sprocket>
+  <xacro:plutarco_motor position="Left">
     <origin xyz="${active_sprocket_offset_x} ${active_sprocket_offset_y-0.07} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_motor>
-  <xacro:myzharbot_motor position="Right">
+  </xacro:plutarco_motor>
+  <xacro:plutarco_motor position="Right">
     <origin xyz="${active_sprocket_offset_x} ${-(active_sprocket_offset_y-0.07)} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_motor>
+  </xacro:plutarco_motor>
   <!-- Active Sprockets -->  
     
   <!-- Passive Sprockets -->
-  <xacro:myzharbot_passive_sprocket sprocket_suffix="bfl" position="Left">
+  <xacro:plutarco_passive_sprocket sprocket_suffix="bfl" position="Left">
     <origin xyz="${passive_sprocket_offset_x} ${passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_passive_sprocket>
-  <xacro:myzharbot_passive_sprocket sprocket_suffix="brl" position="Left">
+  </xacro:plutarco_passive_sprocket>
+  <xacro:plutarco_passive_sprocket sprocket_suffix="brl" position="Left">
     <origin xyz="${-passive_sprocket_offset_x} ${passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_passive_sprocket>
-  <xacro:myzharbot_passive_sprocket sprocket_suffix="bfr" position="Right">
+  </xacro:plutarco_passive_sprocket>
+  <xacro:plutarco_passive_sprocket sprocket_suffix="bfr" position="Right">
     <origin xyz="${passive_sprocket_offset_x} ${-passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_passive_sprocket>
-  <xacro:myzharbot_passive_sprocket sprocket_suffix="brr" position="Right">
+  </xacro:plutarco_passive_sprocket>
+  <xacro:plutarco_passive_sprocket sprocket_suffix="brr" position="Right">
     <origin xyz="${-passive_sprocket_offset_x} ${-passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:myzharbot_passive_sprocket>
+  </xacro:plutarco_passive_sprocket>
   <!-- Passive Sprockets -->
   
 
