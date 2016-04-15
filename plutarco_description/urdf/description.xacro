@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<robot name="plutarco" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find plutarco_description)/urdf/plutarco.urdf.xacro" />
+  <xacro:plutarco_robot />
+
+</robot>

@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<robot name="myzharbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Included URDF/XACRO Files -->
+  <xacro:include filename="$(find myzharbot_description)/urdf/materials.urdf" />
+  <xacro:include filename="$(find myzharbot_description)/urdf/passive_sprocket.urdf.xacro" />
+  <xacro:include filename="$(find myzharbot_description)/urdf/active_sprocket.urdf.xacro" />
+  <xacro:include filename="$(find myzharbot_description)/urdf/motor.urdf.xacro" />
+  <xacro:include filename="$(find myzharbot_description)/urdf/sensors/zed.urdf.xacro"/>
+  <xacro:include filename="$(find myzharbot_description)/urdf/sensors/imu.urdf.xacro"/>
+  <!-- Included URDF/XACRO Files -->
+
+  <!-- Global properties -->
+  <property name="M_PI" value="3.14159"/>
+  <!-- Global properties -->
+  
+  <!-- Sprockets params -->  
+  <property name="passive_sprocket_radius" value="0.06"/>  
+  <property name="passive_sprocket_leght" value="0.008"/>
+  <property name="passive_sprocket_offset_x" value="0.1749"/>
+  <property name="passive_sprocket_offset_y" value="0.170"/>
+  <property name="passive_sprocket_offset_z" value="0.06"/>
+  
+  <property name="active_sprocket_radius" value="0.06"/>
+  <property name="active_sprocket_leght" value="0.05"/>
+  <property name="active_sprocket_offset_x" value="-0.09663"/>
+  <property name="active_sprocket_offset_y" value="0.170"/>
+  <property name="active_sprocket_offset_z" value="0.140"/>
+  <!-- Sprockets params -->
+
+  <!-- Body params -->
+  <property name="base_tickness" value="0.005"/>
+
+  <property name="main_body_height" value="0.12"/>
+
+  <property name="jetson_chassis_height" value="0.05"/>
+  <!-- Body params -->
+
+  <!-- ZED params -->
+  <property name="zed_px" value="0.0725" />
+  <property name="zed_py" value="0.0" />
+  <property name="zed_pz" value="0.208" />
+  <property name="zed_or" value="0" />
+  <property name="zed_op" value="0" />
+  <property name="zed_oy" value="0" />
+  <!-- ZED params -->
+
+  <!-- base_link -->
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length=".001" radius="0.05"/>
+      </geometry>
+      <material name="Red" />
+    </visual>
+  </link>
+  <!-- base_link -->
+
+  <!-- Body chassis -->
+  <link name="body_bottom_chassis_link">
+    <visual>
+      <geometry>
+        <box size="0.336 0.285 ${base_tickness}"/>
+      </geometry>
+      <material name="LightGreyT" />
+    </visual>
+  </link>
+  <joint name="Body_bottom" type="fixed">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="body_bottom_chassis_link"/>
+    <origin rpy="0 0 0" xyz="-0.0085 0 ${passive_sprocket_offset_z+base_tickness/2}"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>  
+
+  <link name="body_top_chassis_link">
+    <visual>
+      <geometry>
+        <box size="0.336 0.235 ${main_body_height}"/>
+      </geometry>
+      <material name="LightGreyT" />
+    </visual>
+  </link>
+  <joint name="Body_top" type="fixed">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="body_top_chassis_link"/>
+    <origin rpy="0 0 0" xyz="-0.0085 0 ${passive_sprocket_offset_z+main_body_height/2+base_tickness}"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint> 
+  <!-- Body chassis --> 
+
+  <!-- Jetson chassis -->
+  <link name="jetson_chassis_link">
+    <visual>
+      <geometry>
+        <box size="0.27 0.27 ${jetson_chassis_height}"/>
+      </geometry>
+      <material name="LightGreyT" />
+    </visual>
+  </link>
+  <joint name="Jetson" type="fixed">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="jetson_chassis_link"/>
+    <origin rpy="0 0 0" xyz="-0.04 0 ${passive_sprocket_offset_z+main_body_height+base_tickness+jetson_chassis_height/2}"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>  
+  <!-- Jetson chassis --> 
+
+  <!-- IMU -->
+  <xacro:imu name="imu" parent="base_link">
+    <!--<origin xyz="0 0 0.22" rpy="0 0 0" />-->
+    <origin xyz="0.0 0.000 0.22" rpy="0 0 0" />
+  </xacro:imu>
+  <!-- IMU -->
+
+  <!-- Stereolabs ZED -->  
+  <xacro:sensor_stereolabs_zed parent="base_link"/>
+  <!-- Stereolabs ZED --> 
+
+  <!-- Active Sprockets -->
+  <xacro:myzharbot_active_sprocket position="Left">
+    <origin xyz="${active_sprocket_offset_x} ${active_sprocket_offset_y} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_active_sprocket>
+  <xacro:myzharbot_active_sprocket position="Right">
+    <origin xyz="${active_sprocket_offset_x} ${-active_sprocket_offset_y} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_active_sprocket>
+  <xacro:myzharbot_motor position="Left">
+    <origin xyz="${active_sprocket_offset_x} ${active_sprocket_offset_y-0.07} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_motor>
+  <xacro:myzharbot_motor position="Right">
+    <origin xyz="${active_sprocket_offset_x} ${-(active_sprocket_offset_y-0.07)} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_motor>
+  <!-- Active Sprockets -->  
+    
+  <!-- Passive Sprockets -->
+  <xacro:myzharbot_passive_sprocket sprocket_suffix="bfl" position="Left">
+    <origin xyz="${passive_sprocket_offset_x} ${passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_passive_sprocket>
+  <xacro:myzharbot_passive_sprocket sprocket_suffix="brl" position="Left">
+    <origin xyz="${-passive_sprocket_offset_x} ${passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_passive_sprocket>
+  <xacro:myzharbot_passive_sprocket sprocket_suffix="bfr" position="Right">
+    <origin xyz="${passive_sprocket_offset_x} ${-passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_passive_sprocket>
+  <xacro:myzharbot_passive_sprocket sprocket_suffix="brr" position="Right">
+    <origin xyz="${-passive_sprocket_offset_x} ${-passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:myzharbot_passive_sprocket>
+  <!-- Passive Sprockets -->
+  
+
+</robot>
