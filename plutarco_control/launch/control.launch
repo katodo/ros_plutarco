@@ -10,9 +10,9 @@
             args="unav_joint_publisher unav_velocity_controller --shutdown-timeout 3"/>
 
     <!-- Start EKF localization -->
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
-      <rosparam command="load" file="$(find plutarco_control)/config/localization.yaml" />
-    </node>
+    <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization"> -->
+    <!--   <rosparam command="load" file="$(find plutarco_control)/config/localization.yaml" /> -->
+    <!-- </node> -->
 
     <!-- Start Ultrasonic Bumper -->
     <!-- NOT IN PLUTARCO <include file="$(find plutarco_control)/launch/include/ultrasonic_bumper.launch" />	 -->	

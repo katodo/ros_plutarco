@@ -3,7 +3,7 @@
 
   <arg name="joy_dev" default="/dev/input/js0" />
 
-  <rosparam command="load" file="$(find dude_control)/config/teleop.yaml" />
+  <rosparam command="load" file="$(find plutarco_control)/config/teleop.yaml" />
 
   <node pkg="joy" type="joy_node" name="joy_node">
     <param name="dev" value="$(arg joy_dev)" />

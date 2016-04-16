@@ -1,154 +1,233 @@
 <?xml version="1.0"?>
-<robot name="plutarco" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="plutarco_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <!-- Included URDF/XACRO Files -->
   <xacro:include filename="$(find plutarco_description)/urdf/materials.urdf" />
-  <xacro:include filename="$(find plutarco_description)/urdf/passive_sprocket.urdf.xacro" />
-  <xacro:include filename="$(find plutarco_description)/urdf/active_sprocket.urdf.xacro" />
   <xacro:include filename="$(find plutarco_description)/urdf/motor.urdf.xacro" />
-  <xacro:include filename="$(find plutarco_description)/urdf/sensors/zed.urdf.xacro"/>
-  <xacro:include filename="$(find plutarco_description)/urdf/sensors/imu.urdf.xacro"/>
+  <xacro:include filename="$(find plutarco_description)/urdf/omniwheel.urdf.xacro" />
+  <xacro:include filename="$(find plutarco_description)/urdf/wheel.urdf.xacro" />
+  <xacro:include filename="$(find plutarco_description)/urdf/asus_xtion_pro.urdf.xacro"/>
+  <xacro:include filename="$(find plutarco_description)/urdf/imu.urdf.xacro"/>
   <!-- Included URDF/XACRO Files -->
 
   <!-- Global properties -->
+  <property name="path_meshes" value="package://plutarco_description/meshes"/>
   <property name="M_PI" value="3.14159"/>
   <!-- Global properties -->
   
-  <!-- Sprockets params -->  
-  <property name="passive_sprocket_radius" value="0.06"/>  
-  <property name="passive_sprocket_leght" value="0.008"/>
-  <property name="passive_sprocket_offset_x" value="0.1749"/>
-  <property name="passive_sprocket_offset_y" value="0.170"/>
-  <property name="passive_sprocket_offset_z" value="0.06"/>
-  
-  <property name="active_sprocket_radius" value="0.06"/>
-  <property name="active_sprocket_leght" value="0.05"/>
-  <property name="active_sprocket_offset_x" value="-0.09663"/>
-  <property name="active_sprocket_offset_y" value="0.170"/>
-  <property name="active_sprocket_offset_z" value="0.140"/>
-  <!-- Sprockets params -->
+  <!-- Wheels params -->
+  <property name="wheel_radius" value="0.0365"/>
+  <property name="wheel_leght" value="0.01"/>
+  <property name="wheel_offset_x" value="-0.00"/>
+  <property name="wheel_offset_y" value="0.08"/>
+  <property name="wheel_offset_z" value="${wheel_radius}"/>
+  <!-- Wheels params -->
 
-  <!-- Body params -->
-  <property name="base_tickness" value="0.005"/>
+  <!-- Asus Xtion params -->
+  <property name="camera_axis" value="fixed"/>
+  <property name="cam_px" value="-0.005" />
+  <property name="cam_py" value="0.0" />
+  <property name="cam_pz" value="0.113" />
+  <property name="cam_or" value="0" />
+  <property name="cam_op" value="0" />
+  <property name="cam_oy" value="0" />
+  <!-- Asus Xtion params -->
 
-  <property name="main_body_height" value="0.12"/>
-
-  <property name="jetson_chassis_height" value="0.05"/>
-  <!-- Body params -->
-
-  <!-- ZED params -->
-  <property name="zed_px" value="0.0725" />
-  <property name="zed_py" value="0.0" />
-  <property name="zed_pz" value="0.208" />
-  <property name="zed_or" value="0" />
-  <property name="zed_op" value="0" />
-  <property name="zed_oy" value="0" />
-  <!-- ZED params -->
+  <xacro:macro name="plutarco_robot">
 
   <!-- base_link -->
   <link name="base_link">
+    <inertial>
+      <origin xyz="-0.086 0 0.0378" rpy="0 0 0" />
+      <mass value="0.4555" />
+      <inertia
+        ixx="0.00145" ixy="0" ixz="0.000124"
+        iyy="0.00233" iyz="0"
+        izz="0.00290" />
+    </inertial>
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <cylinder length=".001" radius="0.05"/>
+        <mesh filename="${path_meshes}/body/base_link.STL" />
       </geometry>
-      <material name="Red" />
+      <material name="Yellow" />
     </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.07" rpy="0 0 0" />
+      <geometry>
+        <box size="0.08 0.14 0.11"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="-0.13 0.0 0.07" rpy="0 0 0" />
+      <geometry>
+        <box size="0.18 0.19 0.11"/>
+      </geometry>
+    </collision>
   </link>
   <!-- base_link -->
 
   <!-- Body chassis -->
-  <link name="body_bottom_chassis_link">
+  <link name="wall_body_Link">
+    <inertial>
+      <origin xyz="-0.090836 0 0.084998" rpy="0 0 0" />
+      <mass value="0.20283" />
+      <inertia 
+        ixx="0.0009070" ixy="0" ixz="0"
+        iyy="0.0012807" iyz="0"
+        izz="0.0017437" />
+    </inertial>
     <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <box size="0.336 0.285 ${base_tickness}"/>
+        <mesh
+          filename="${path_meshes}/body/wall_body_Link.STL" />
       </geometry>
-      <material name="LightGreyT" />
+      <material name="">
+        <color rgba="1 1 1 0.5" />
+      </material>
     </visual>
   </link>
-  <joint name="Body_bottom" type="fixed">
-    <axis xyz="0 0 1"/>
-    <parent link="base_link"/>
-    <child link="body_bottom_chassis_link"/>
-    <origin rpy="0 0 0" xyz="-0.0085 0 ${passive_sprocket_offset_z+base_tickness/2}"/>
-    <joint_properties damping="0.0" friction="0.0"/>
-  </joint>  
+  <joint name="wall_body" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="wall_body_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
 
-  <link name="body_top_chassis_link">
+  <link name="column_body_Link">
+    <inertial>
+      <origin xyz="-0.11 0.00119 0.05782" rpy="0 0 0" />
+      <mass value="0.1397" />
+      <inertia
+        ixx="0.00048" ixy="0" ixz="0"
+        iyy="0.00098" iyz="0"
+        izz="0.00124" />
+    </inertial>
     <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <box size="0.336 0.235 ${main_body_height}"/>
+        <mesh filename="${path_meshes}/body/column_body_Link.STL" />
       </geometry>
-      <material name="LightGreyT" />
+      <material name="Black" />
     </visual>
   </link>
-  <joint name="Body_top" type="fixed">
-    <axis xyz="0 0 1"/>
-    <parent link="base_link"/>
-    <child link="body_top_chassis_link"/>
-    <origin rpy="0 0 0" xyz="-0.0085 0 ${passive_sprocket_offset_z+main_body_height/2+base_tickness}"/>
-    <joint_properties damping="0.0" friction="0.0"/>
-  </joint> 
-  <!-- Body chassis --> 
+  <joint name="column_body" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="column_body_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
 
-  <!-- Jetson chassis -->
-  <link name="jetson_chassis_link">
+  <link name="battery_Link">
+    <inertial>
+      <origin xyz="0 0 0.018" rpy="0 0 0" />
+      <mass value="0.24981" />
+      <inertia
+        ixx="0.00044483" ixy="1.2332E-20" ixz="1.0603E-21"
+        iyy="7.6356E-05" iyz="2.4007E-20"
+        izz="0.00046843" />
+    </inertial>
     <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <box size="0.27 0.27 ${jetson_chassis_height}"/>
+        <mesh filename="${path_meshes}/body/battery_Link.STL" />
       </geometry>
-      <material name="LightGreyT" />
+      <material name="Blue" />
     </visual>
   </link>
-  <joint name="Jetson" type="fixed">
-    <axis xyz="0 0 1"/>
-    <parent link="base_link"/>
-    <child link="jetson_chassis_link"/>
-    <origin rpy="0 0 0" xyz="-0.04 0 ${passive_sprocket_offset_z+main_body_height+base_tickness+jetson_chassis_height/2}"/>
-    <joint_properties damping="0.0" friction="0.0"/>
-  </joint>  
-  <!-- Jetson chassis --> 
+  <joint name="battery" type="fixed">
+    <origin xyz="-0.08145 0 0.0198375999999985" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="battery_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <link name="electronics_Link">
+    <inertial>
+      <origin xyz="-0.036996 0.030509 0.06534" rpy="0 0 0" />
+      <mass value="0.0041313" />
+      <inertia
+        ixx="5.2552E-07" ixy="4.4197E-12" ixz="3.55E-11"
+        iyy="5.2551E-07" iyz="7.1007E-11"
+        izz="1.0455E-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="${path_meshes}/body/electronics_Link.STL" />
+      </geometry>
+      <material name="White" />
+    </visual>
+  </link>
+  <joint name="electronics" type="fixed">
+    <origin xyz="0.03105 0 0.0138375999999985" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="electronics_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <link name="jetson_board_Link">
+    <inertial>
+      <origin xyz="-0.014974 0.000698 0.0046671" rpy="0 0 0" />
+      <mass value="0.054421" />
+      <inertia
+        ixx="7.5163E-05" ixy="4.1299E-06" ixz="-4.9228E-06"
+        iyy="8.1481E-05" iyz="-1.4961E-06"
+        izz="0.00015315" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="${path_meshes}/body/jetson_board_Link.STL" />
+      </geometry>
+      <material name="Green" />
+    </visual>
+  </link>
+  <joint name="jetson_board" type="fixed">
+    <origin xyz="-0.131461588151754 0 0.064" rpy="0 0 0" />
+    <parent link="electronics_Link" />
+    <child link="jetson_board_Link" />
+    <axis xyz="0 0 0" />
+  </joint>
 
   <!-- IMU -->
-  <xacro:imu name="imu" parent="base_link">
-    <!--<origin xyz="0 0 0.22" rpy="0 0 0" />-->
-    <origin xyz="0.0 0.000 0.22" rpy="0 0 0" />
+  <xacro:imu name="base_imu" parent="base_link">
+    <!--<origin xyz="-0.06 0 0.11" rpy="0 0 0" />-->
+    <origin xyz="-0.0617 -0.0008 0.1043376" rpy="0 0 0" />
   </xacro:imu>
   <!-- IMU -->
 
-  <!-- Stereolabs ZED -->  
-  <xacro:sensor_stereolabs_zed parent="base_link"/>
-  <!-- Stereolabs ZED --> 
+  <!-- Motors -->
+  <xacro:motor position="left" parent="column_body_Link">
+    <origin xyz="0 0.087616 0.0365" rpy="0 0 0" />
+  </xacro:motor>
+  <xacro:motor position="right" parent="column_body_Link">
+    <origin xyz="0 -0.087616 0.0365" rpy="0 0 ${M_PI}" />
+  </xacro:motor>
+  <!-- Motors -->
 
-  <!-- Active Sprockets -->
-  <xacro:plutarco_active_sprocket position="Left">
-    <origin xyz="${active_sprocket_offset_x} ${active_sprocket_offset_y} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_active_sprocket>
-  <xacro:plutarco_active_sprocket position="Right">
-    <origin xyz="${active_sprocket_offset_x} ${-active_sprocket_offset_y} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_active_sprocket>
-  <xacro:plutarco_motor position="Left">
-    <origin xyz="${active_sprocket_offset_x} ${active_sprocket_offset_y-0.07} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_motor>
-  <xacro:plutarco_motor position="Right">
-    <origin xyz="${active_sprocket_offset_x} ${-(active_sprocket_offset_y-0.07)} ${active_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_motor>
-  <!-- Active Sprockets -->  
-    
-  <!-- Passive Sprockets -->
-  <xacro:plutarco_passive_sprocket sprocket_suffix="bfl" position="Left">
-    <origin xyz="${passive_sprocket_offset_x} ${passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_passive_sprocket>
-  <xacro:plutarco_passive_sprocket sprocket_suffix="brl" position="Left">
-    <origin xyz="${-passive_sprocket_offset_x} ${passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_passive_sprocket>
-  <xacro:plutarco_passive_sprocket sprocket_suffix="bfr" position="Right">
-    <origin xyz="${passive_sprocket_offset_x} ${-passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_passive_sprocket>
-  <xacro:plutarco_passive_sprocket sprocket_suffix="brr" position="Right">
-    <origin xyz="${-passive_sprocket_offset_x} ${-passive_sprocket_offset_y} ${passive_sprocket_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:plutarco_passive_sprocket>
-  <!-- Passive Sprockets -->
-  
+  <!-- Omniwheel -->  
+  <xacro:omniwheel parent="base_link">
+    <origin xyz="-0.20895 0 0.021838" rpy="0 0 ${M_PI}" />
+  </xacro:omniwheel>
+  <!-- Omniwheel -->
+
+  <!-- Asus Xtion Pro Live -->  
+  <xacro:sensor_asus_xtion_pro parent="base_link" type="${camera_axis}">
+    <origin xyz="${cam_px} ${cam_py} ${cam_pz}"  rpy="${cam_or} ${cam_op} ${cam_oy}" />
+  </xacro:sensor_asus_xtion_pro>
+  <!-- Asus Xtion Pro Live --> 
+
+  <!-- Wheels -->
+  <xacro:banebots_wheel position="Left" reflect="-1">
+    <origin xyz="${wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="${M_PI/2} 0 0" />
+  </xacro:banebots_wheel>
+  <xacro:banebots_wheel position="Right" reflect="1">
+    <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="${-M_PI/2} 0 0" />
+  </xacro:banebots_wheel>
+  <!-- Wheels -->
+
+  </xacro:macro>
 
 </robot>

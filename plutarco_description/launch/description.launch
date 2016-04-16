@@ -8,7 +8,7 @@ Software License Agreement (BSD)
 
 -->
 <launch>
-  <!-- Send the PlutarcoRobot URDF/XACRO to param server -->
+  <!-- Send the Plutarco Robot URDF/XACRO to param server -->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find plutarco_description)/urdf/description.xacro'" />
   
   <!-- Activate node to propagate the joint state -->
