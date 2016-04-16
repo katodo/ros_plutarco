@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <arg name="imu_enabled" value="false"/>
   </include>
   
-  <node name="wandering" pkg="robot_wandering_demo_ros" type="robot_wandering_node" />
+  <node name="wandering" pkg="ros_robot_wandering_demo" type="robot_wandering_node" />
 
  
 </launch>

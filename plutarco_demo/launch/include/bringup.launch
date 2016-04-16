@@ -4,7 +4,7 @@
 
   <!--	<arg name="zed_stereo_enabled" default="false"/>	-->
 	<arg name="imu_enabled" default="false"/>
-  <arg name="joystick_enabled" default="true"/>
+  <arg name="joystick_enabled" default="false"/>
 
   <!--	Start uNav Hardware Interface -->
 	<include file="$(find plutarco_control)/launch/include/driver.launch" />
