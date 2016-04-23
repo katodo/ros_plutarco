@@ -24,14 +24,21 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
-    <arg name="port" default="/dev/ttyUSB1" />
+    <!--<arg name="port" default="/dev/ttyUSB1" /> -->
 
     <!-- Load robot description -->
     <include file="$(find plutarco_description)/launch/description.launch" />
 
     <!-- ORBus harware driver -->
     <node pkg="orbus_interface" type="hardware_unav" name="unav" output="screen">
-        <rosparam command="load" file="$(find plutarco_control)/config/plutarco.yaml" />
+        <!-- <rosparam command="load" file="$(find plutarco_control)/config/plutarco.yaml" /> -->
+        <rosparam subst_value="true">
+            serial_port: /dev/ttyUSB1
+            serial_rate: 115000
+
+            control_frequency: 10.0
+            diagnostic_frequency: 1.0
+        </rosparam>
     </node>
 
 
