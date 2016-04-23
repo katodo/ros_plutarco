@@ -24,7 +24,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <launch>
-    <arg name="port" default="/dev/ttyUSB0" />
+    <arg name="port" default="/dev/ttyUSB1" />
 
     <!-- Load robot description -->
     <include file="$(find plutarco_description)/launch/description.launch" />
@@ -33,4 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <node pkg="orbus_interface" type="hardware_unav" name="unav" output="screen">
         <rosparam command="load" file="$(find plutarco_control)/config/plutarco.yaml" />
     </node>
+
+
 </launch>

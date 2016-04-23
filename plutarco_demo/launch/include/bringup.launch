@@ -3,8 +3,8 @@
 <launch>
 
   <!--	<arg name="zed_stereo_enabled" default="false"/>	-->
-	<arg name="imu_enabled" default="false"/>
-  <arg name="joystick_enabled" default="false"/>
+	<!--	<arg name="imu_enabled" default="false"/>	-->
+  <!--	<arg name="joystick_enabled" default="false"/>	-->
 
   <!--	Start uNav Hardware Interface -->
 	<include file="$(find plutarco_control)/launch/include/driver.launch" />
@@ -15,14 +15,14 @@
  	<!--	</group>  -->
 
   <!--	Start IMU sensor -->
-	<group if="$(arg imu_enabled)">
-		<include file="$(find plutarco_control)/launch/include/imu.launch" />
-	</group>
+	<!--	<group if="$(arg imu_enabled)"> -->
+	<!--		<include file="$(find plutarco_control)/launch/include/imu.launch" /> -->
+	<!--	</group> -->
 
   <!-- Load teleoperation telecontrol -->
-  <group if="$(arg joystick_enabled)">
-  	<include file="$(find plutarco_control)/launch/teleop.launch" />
-  </group>
+  <!-- <group if="$(arg joystick_enabled)"> -->
+  <!-- 	<include file="$(find plutarco_control)/launch/teleop.launch" /> -->
+  <!-- </group> -->
 
   <!-- Start controller, Ultrasonic bumper filter and EKF-->
   <include file="$(find plutarco_control)/launch/control.launch" />
