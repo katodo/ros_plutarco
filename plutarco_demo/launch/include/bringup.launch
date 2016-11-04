@@ -15,9 +15,7 @@
  	<!--	</group>  -->
 
   <!--	Start IMU sensor -->
-	<!--	<group if="$(arg imu_enabled)"> -->
-	<!--		<include file="$(find plutarco_control)/launch/include/imu.launch" /> -->
-	<!--	</group> -->
+	<include file="$(find plutarco_control)/launch/include/imu.launch" />
 
   <!-- Load teleoperation telecontrol -->
   <!-- <group if="$(arg joystick_enabled)"> -->
