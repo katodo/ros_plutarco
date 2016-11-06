@@ -9,7 +9,7 @@
 	<!-- ########################################################################### -->
 	<!-- Laserscan topic -->
 	
-	<arg name="scan_topic" default="scan"/>
+	<arg name="scan_topic" default="zed/scan"/>
 	<arg name="scan_processing"  default="true"/>
 	<group if="$(arg scan_processing)">
 	    <node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" output="screen">
@@ -18,8 +18,8 @@
 		<param name="scan_height" value="3"/>
 		<param name="output_frame_id" value="zed_current_frame"/>
 		<param name="range_min" value="0.1"/>
-		<remap from="image" to="/zed/depth/depth_registered"/>
-		<remap from="camera_info" to="/zed/depth/camera_info"/>
+		<remap from="image" to="/zed/zed/depth/depth_registered"/>
+		<remap from="camera_info" to="/zed/zed/depth/camera_info"/>
 		<remap from="scan" to="$(arg scan_topic)"/>
 	    </node>
      	</group>
