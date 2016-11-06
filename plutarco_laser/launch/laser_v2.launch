@@ -1,0 +1,104 @@
+<launch>
+<group ns="zed">
+    <arg name="svo_file" default=""/>
+    <arg name="zed_id" default="0"/>
+
+	<!--  <group ns="zed"> 								-->
+	<!--    <include file="$(find zed_wrapper)/launch/zed.launch">			-->
+	<!--    </include>								-->
+  
+	<!--        <include file="$(find zed_wrapper)/launch/zed_camera.launch">	-->
+	<!--          <arg name="svo_file" value="$(arg svo_file)" />			-->
+	<!--          <arg name="zed_id" value="$(arg zed_id)" />			-->
+	<!--        </include>								-->
+
+
+	<!-- ########################################################################### -->
+	<!--  <include file="$(find zed_wrapper)/launch/zed_tf.launch" />-->
+    <arg name="camera" default="zed"/>
+    <arg name="tf_prefix" default="" />
+    <arg name="pi/2" value="1.5707963267948966" />
+    <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_base_link1"
+    args="0 0 0 0 0 0 1 map $(arg tf_prefix)/$(arg camera)_initial_frame" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_base_link3"
+    args="0 0 0 0 0 0 1 $(arg tf_prefix)/$(arg camera)_current_frame ZED_left_camera" />
+	<!-- ########################################################################### -->
+
+
+	<!-- ########################################################################### -->
+    <node name="zed_wrapper_node" pkg="zed_wrapper" type="zed_wrapper_node" output="screen">
+
+    <!-- SVO file path -->
+    <param name="svo_filepath" value="$(arg svo_file)" />
+
+    <!-- ZED parameters -->
+    <param name="zed_id"                value="$(arg zed_id)" />
+
+    <param name="resolution"            value="2" />
+    <param name="quality"               value="1" />
+    <param name="sensing_mode"          value="1" />
+    <param name="frame_rate"            value="60" />
+    <param name="odometry_db"           value="" />
+    <param name="openni_depth_mode"     value="0" />
+    <param name="gpu_id"                value="-1" />
+
+    <!-- ROS topic names -->
+    <param name="rgb_topic"             value="rgb/image_rect_color" />
+    <param name="rgb_raw_topic"         value="rgb/image_raw_color" />
+    <param name="rgb_cam_info_topic"    value="rgb/camera_info" />
+
+    <param name="left_topic"            value="left/image_rect_color" />
+    <param name="left_raw_topic"        value="left/image_raw_color" />
+    <param name="left_cam_info_topic"   value="left/camera_info" />
+
+    <param name="right_topic"           value="right/image_rect_color" />
+    <param name="right_raw_topic"       value="right/image_raw_color" />
+    <param name="right_cam_info_topic"  value="right/camera_info" />
+
+    <param name="depth_topic"           value="depth/depth_registered" />
+    <param name="depth_cam_info_topic"  value="depth/camera_info" />
+
+    <param name="point_cloud_topic"     value="point_cloud/cloud_registered" />
+
+    <param name="odometry_topic"        value="odom" />
+
+  </node>
+
+  <!-- ROS URDF description of the ZED -->
+  <param name="zed_description" textfile="$(find zed_wrapper)/urdf/zed.urdf" />
+  <node name="zed_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    <remap from="robot_description" to="zed_description" />
+  </node>
+	<!-- ########################################################################### -->
+
+
+
+	<!-- ########################################################################### -->
+	<!-- ########################################################################### -->
+
+
+	<!-- ########################################################################### -->
+	<!-- Laserscan                                                                   -->
+	<!-- This uses lazy subscribing, so will not activate until scan is requested.   -->
+	<!-- ########################################################################### -->
+	<!-- Laserscan topic -->
+	
+	<arg name="scan_topic" default="zed/scan"/>
+	<arg name="scan_processing"  default="true"/>
+	<!--<group if="$(arg scan_processing)"> -->
+	    <node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" output="screen">
+		<!-- Pixel rows to use to generate the laserscan. For each column, the scan will -->
+		<!-- return the minimum value for those pixels centered vertically in the image. -->
+		<param name="scan_height" value="3"/>
+		<param name="output_frame_id" value="zed_current_frame"/>
+		<param name="range_min" value="0.1"/>
+		<remap from="image" to="/zed/depth/depth_registered"/>
+		<remap from="camera_info" to="/zed/depth/camera_info"/>
+		<remap from="scan" to="$(arg scan_topic)"/>
+	    </node>
+     	<!--</group> -->
+	<!-- ########################################################################### -->
+</group>
+
+</launch>
