@@ -23,7 +23,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<robot name="example">
+<robot name="plutarco">
 	<!-- Base link position -->
 	<link name="base_link">
 		<visual>
@@ -40,7 +40,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<link name="left_wheel">
 		<visual>
 			<geometry>
-				<cylinder length="0.02" radius="0.05"/>
+				<cylinder length="0.02" radius="0.10"/>
 			</geometry>
 			<material name="black">
 				<color rgba="0 0 0 1"/>
@@ -48,7 +48,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</visual>
     <collision>
       <geometry>
-        <cylinder length="0.02" radius="0.05"/>
+        <cylinder length="0.02" radius="0.10"/>
       </geometry>
     </collision>
 	</link>
@@ -76,7 +76,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<link name="right_wheel">
 		<visual>
 			<geometry>
-				<cylinder length="0.02" radius="0.05"/>
+				<cylinder length="0.02" radius="0.10"/>
 			</geometry>
 			<material name="black">
 				<color rgba="0 0 0 1"/>
