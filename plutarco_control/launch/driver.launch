@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <!-- You can write the definition about the serial port configuration
              and the controller and diagnostic frequency. -->
         <rosparam subst_value="true">
-            serial_port: /dev/ttyUSB0
+            serial_port: /dev/ttyTHS0
             serial_rate: 115200
             control_frequency: 10.0
             diagnostic_frequency: 1.0

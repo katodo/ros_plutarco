@@ -11,26 +11,26 @@
   <!-- Included URDF/XACRO Files -->
 
   <!-- Global properties -->
-  <property name="path_meshes" value="package://plutarco_description/meshes"/>
-  <property name="M_PI" value="3.14159"/>
+  <xacro:property name="path_meshes" value="package://plutarco_description/meshes"/>
+  <xacro:property name="M_PI" value="3.14159"/>
   <!-- Global properties -->
   
   <!-- Wheels params -->
-  <property name="wheel_radius" value="0.0365"/>
-  <property name="wheel_leght" value="0.01"/>
-  <property name="wheel_offset_x" value="-0.00"/>
-  <property name="wheel_offset_y" value="0.08"/>
-  <property name="wheel_offset_z" value="${wheel_radius}"/>
+  <xacro:property name="wheel_radius" value="0.0365"/>
+  <xacro:property name="wheel_leght" value="0.01"/>
+  <xacro:property name="wheel_offset_x" value="-0.00"/>
+  <xacro:property name="wheel_offset_y" value="0.08"/>
+  <xacro:property name="wheel_offset_z" value="${wheel_radius}"/>
   <!-- Wheels params -->
 
   <!-- Asus Xtion params -->
-  <property name="camera_axis" value="fixed"/>
-  <property name="cam_px" value="-0.005" />
-  <property name="cam_py" value="0.0" />
-  <property name="cam_pz" value="0.113" />
-  <property name="cam_or" value="0" />
-  <property name="cam_op" value="0" />
-  <property name="cam_oy" value="0" />
+  <xacro:property name="camera_axis" value="fixed"/>
+  <xacro:property name="cam_px" value="-0.005" />
+  <xacro:property name="cam_py" value="0.0" />
+  <xacro:property name="cam_pz" value="0.113" />
+  <xacro:property name="cam_or" value="0" />
+  <xacro:property name="cam_op" value="0" />
+  <xacro:property name="cam_oy" value="0" />
   <!-- Asus Xtion params -->
 
   <xacro:macro name="plutarco_robot">

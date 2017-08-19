@@ -9,8 +9,14 @@ Software License Agreement (BSD)
 -->
 <launch>
   <!-- Send the Plutarco Robot URDF/XACRO to param server -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find plutarco_description)/urdf/description.xacro'" />
-  
+  <!-- <param name="robot_description" command="$(find xacro)/xacro '$(find plutarco_description)/urdf/description.xacro'" /> -->
+
+    <!-- Load the urdf with all information about your robot.
+  To work with unav_node is required to add in your URDF the transmission tag.
+  READ inside for other information. -->
+  <param name="robot_description" textfile="$(find plutarco_description)/urdf/example.urdf" />
+
+
   <!-- Activate node to propagate the joint state -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 </launch>
