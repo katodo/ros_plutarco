@@ -29,13 +29,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		<visual>
 			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.06" />
 			<geometry>
-				<cylinder length="0.1" radius="0.1" />
+				<!-- <cylinder length="0.1" radius="0.1" /> -->
+				<box size="0.89 0.35 0.14"/>
 			</geometry>
 			<material name="green">
 				<color rgba="0 1 0 0.5"/>
 			</material>
 		</visual>
 	</link>
+
+
 	<!-- Left wheel link -->
 	<link name="left_wheel">
 		<visual>
@@ -46,12 +49,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				<color rgba="0 0 0 1"/>
 			</material>
 		</visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.02" radius="0.10"/>
-      </geometry>
-    </collision>
+    		<collision>
+      			<geometry>
+        			<cylinder length="0.02" radius="0.10"/>
+      			</geometry>
+    		</collision>
 	</link>
+
 	<!-- Joint configuration left joint -->
 	<joint name="left_joint" type="continuous">
 		<axis xyz="0 0 -1"/>
@@ -61,6 +65,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		<limit effort="2" velocity="10"/>
 		<joint_properties damping="0.02" friction="0.04"/>
 	</joint>
+
 	<!-- Transmission configuration left joint -->
 	<transmission name="$left_trans" type="SimpleTransmission">
 		<type>transmission_interface/SimpleTransmission</type>
@@ -72,6 +77,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</joint>
 	</transmission>
 
+
+
+
+
 	<!-- Right wheel link -->
 	<link name="right_wheel">
 		<visual>
@@ -82,12 +91,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				<color rgba="0 0 0 1"/>
 			</material>
 		</visual>
-    <collision>
-      <geometry>
-        <cylinder length="0.02" radius="0.05"/>
-      </geometry>
-    </collision>
+    		<collision>
+	      		<geometry>
+				<cylinder length="0.02" radius="0.05"/>
+	      		</geometry>
+    		</collision>
 	</link>
+
 	<!-- Joint configuration left joint -->
 	<joint name="right_joint" type="continuous">
 		<axis xyz="0 0 -1"/>
