@@ -4,17 +4,17 @@
   <!-- Included URDF/XACRO Files -->
   <xacro:include filename="$(find plutarco_description)/urdf/materials.urdf" />
   <xacro:include filename="$(find plutarco_description)/urdf/motor.urdf.xacro" />
-  <xacro:include filename="$(find plutarco_description)/urdf/omniwheel.urdf.xacro" />
-  <xacro:include filename="$(find plutarco_description)/urdf/wheel.urdf.xacro" />
-  <xacro:include filename="$(find plutarco_description)/urdf/asus_xtion_pro.urdf.xacro"/>
-  <xacro:include filename="$(find plutarco_description)/urdf/imu.urdf.xacro"/>
+  <!-- <xacro:include filename="$(find plutarco_description)/urdf/omniwheel.urdf.xacro" /> -->
+  <!-- <xacro:include filename="$(find plutarco_description)/urdf/wheel.urdf.xacro" /> -->
+  <!-- <xacro:include filename="$(find plutarco_description)/urdf/asus_xtion_pro.urdf.xacro"/> -->
+  <!-- <xacro:include filename="$(find plutarco_description)/urdf/imu.urdf.xacro"/> -->
   <!-- Included URDF/XACRO Files -->
 
   <!-- Global properties -->
   <xacro:property name="path_meshes" value="package://plutarco_description/meshes"/>
   <xacro:property name="M_PI" value="3.14159"/>
   <!-- Global properties -->
-  
+
   <!-- Wheels params -->
   <xacro:property name="wheel_radius" value="0.0365"/>
   <xacro:property name="wheel_leght" value="0.01"/>
@@ -24,13 +24,13 @@
   <!-- Wheels params -->
 
   <!-- Asus Xtion params -->
-  <xacro:property name="camera_axis" value="fixed"/>
+  <!--<xacro:property name="camera_axis" value="fixed"/>
   <xacro:property name="cam_px" value="-0.005" />
   <xacro:property name="cam_py" value="0.0" />
   <xacro:property name="cam_pz" value="0.113" />
   <xacro:property name="cam_or" value="0" />
   <xacro:property name="cam_op" value="0" />
-  <xacro:property name="cam_oy" value="0" />
+  <xacro:property name="cam_oy" value="0" />  -->
   <!-- Asus Xtion params -->
 
   <xacro:macro name="plutarco_robot">
@@ -68,11 +68,11 @@
   <!-- base_link -->
 
   <!-- Body chassis -->
-  <link name="wall_body_Link">
+<!--   <link name="wall_body_Link">
     <inertial>
       <origin xyz="-0.090836 0 0.084998" rpy="0 0 0" />
       <mass value="0.20283" />
-      <inertia 
+      <inertia
         ixx="0.0009070" ixy="0" ixz="0"
         iyy="0.0012807" iyz="0"
         izz="0.0017437" />
@@ -94,8 +94,10 @@
     <child link="wall_body_Link" />
     <axis xyz="0 0 0" />
   </joint>
+-->
 
-  <link name="column_body_Link">
+
+<!--  <link name="column_body_Link">
     <inertial>
       <origin xyz="-0.11 0.00119 0.05782" rpy="0 0 0" />
       <mass value="0.1397" />
@@ -118,8 +120,9 @@
     <child link="column_body_Link" />
     <axis xyz="0 0 0" />
   </joint>
+-->
 
-  <link name="battery_Link">
+<!--  <link name="battery_Link">
     <inertial>
       <origin xyz="0 0 0.018" rpy="0 0 0" />
       <mass value="0.24981" />
@@ -142,8 +145,9 @@
     <child link="battery_Link" />
     <axis xyz="0 0 0" />
   </joint>
+-->
 
-  <link name="electronics_Link">
+<!--  <link name="electronics_Link">
     <inertial>
       <origin xyz="-0.036996 0.030509 0.06534" rpy="0 0 0" />
       <mass value="0.0041313" />
@@ -166,8 +170,9 @@
     <child link="electronics_Link" />
     <axis xyz="0 0 0" />
   </joint>
+-->
 
-  <link name="jetson_board_Link">
+<!--  <link name="jetson_board_Link">
     <inertial>
       <origin xyz="-0.014974 0.000698 0.0046671" rpy="0 0 0" />
       <mass value="0.054421" />
@@ -190,42 +195,48 @@
     <child link="jetson_board_Link" />
     <axis xyz="0 0 0" />
   </joint>
+-->
 
   <!-- IMU -->
+  <!--
   <xacro:imu name="base_imu" parent="base_link">
-    <!--<origin xyz="-0.06 0 0.11" rpy="0 0 0" />-->
     <origin xyz="-0.0617 -0.0008 0.1043376" rpy="0 0 0" />
   </xacro:imu>
+-->
   <!-- IMU -->
 
   <!-- Motors -->
-  <xacro:motor position="left" parent="column_body_Link">
+  <xacro:motor position="left" parent="base_link">
     <origin xyz="0 0.087616 0.0365" rpy="0 0 0" />
   </xacro:motor>
-  <xacro:motor position="right" parent="column_body_Link">
+  <xacro:motor position="right" parent="base_link">
     <origin xyz="0 -0.087616 0.0365" rpy="0 0 ${M_PI}" />
   </xacro:motor>
   <!-- Motors -->
 
-  <!-- Omniwheel -->  
+  <!-- Omniwheel -->
+  <!--
   <xacro:omniwheel parent="base_link">
     <origin xyz="-0.20895 0 0.021838" rpy="0 0 ${M_PI}" />
   </xacro:omniwheel>
+-->
   <!-- Omniwheel -->
 
-  <!-- Asus Xtion Pro Live -->  
+  <!-- Asus Xtion Pro Live -->
+  <!--
   <xacro:sensor_asus_xtion_pro parent="base_link" type="${camera_axis}">
     <origin xyz="${cam_px} ${cam_py} ${cam_pz}"  rpy="${cam_or} ${cam_op} ${cam_oy}" />
   </xacro:sensor_asus_xtion_pro>
-  <!-- Asus Xtion Pro Live --> 
+-->
+  <!-- Asus Xtion Pro Live -->
 
   <!-- Wheels -->
-  <xacro:banebots_wheel position="Left" reflect="-1">
+  <xacro:plutarco_traction_gear position="Left" reflect="-1">
     <origin xyz="${wheel_offset_x} ${-wheel_offset_y} ${wheel_offset_z}" rpy="${M_PI/2} 0 0" />
-  </xacro:banebots_wheel>
-  <xacro:banebots_wheel position="Right" reflect="1">
+  </xacro:plutarco_traction_gear>
+  <xacro:plutarco_traction_gear position="Right" reflect="1">
     <origin xyz="${wheel_offset_x} ${wheel_offset_y} ${wheel_offset_z}" rpy="${-M_PI/2} 0 0" />
-  </xacro:banebots_wheel>
+  </xacro:plutarco_traction_gear>
   <!-- Wheels -->
 
   </xacro:macro>
