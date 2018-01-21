@@ -26,10 +26,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <launch>
 
   <include file="$(find plutarco_demo)/launch/include/bringup.launch">
-    <arg name="imu_enabled" value="true"/>
+    <!--  <arg name="imu_enabled" value="false"/>   -->
   </include>
-  
+
   <!--<node name="wandering" pkg="ros_robot_wandering_demo" type="robot_wandering_node" /> -->
 
- 
+
 </launch>

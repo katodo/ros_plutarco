@@ -7,15 +7,15 @@
   <!--	<arg name="joystick_enabled" default="false"/>	-->
 
   <!--	Start uNav Hardware Interface -->
-	<include file="$(find plutarco_control)/launch/include/driver.launch" />
-  
+	<!--	<include file="$(find plutarco_control)/launch/include/driver.launch" /> -->
+
   <!--	Start ZED camera and laser scan -->
  	<!--	<group if="$(arg zed_stereo_enabled)">	-->
  	<!--		<include file="$(find plutarco_control)/launch/include/zed_stereo.launch" />	-->
  	<!--	</group>  -->
 
   <!--	Start IMU sensor -->
-	<include file="$(find plutarco_control)/launch/include/imu.launch" />
+	<!--	<include file="$(find plutarco_control)/launch/include/imu.launch" />  	-->
 
   <!-- Load teleoperation telecontrol -->
   <!-- <group if="$(arg joystick_enabled)"> -->
@@ -24,5 +24,5 @@
 
   <!-- Start controller, Ultrasonic bumper filter and EKF-->
   <include file="$(find plutarco_control)/launch/control.launch" />
- 
+
 </launch>
