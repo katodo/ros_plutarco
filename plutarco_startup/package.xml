@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <name>plutarco_startup</name>
+  <version>0.0.1</version>
+  <description>
+	This is a list of all demo avaiable for robot
+  </description>
+
+  
+  <maintainer email="mauro.soligo@katodo.com">Mauro Soligo</maintainer>
+
+  <license>BSD</license>
+
+  <url type="repository">https://github.com/katodo/ros_plutarco/plutarco_startup</url>
+
+  <author email="mauro.soligo@katodo.com">Mauro Soligo</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+
+  <run_depend>plutarco_description</run_depend>
+  <run_depend>orbus_interface</run_depend>
+
+</package>

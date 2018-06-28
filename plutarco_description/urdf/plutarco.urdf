@@ -1,38 +1,17 @@
 <?xml version="1.0"?>
-<!--
-\author   Raffaello Bonghi <raffaello@rnext.it
-\copyright Copyright (c) 2016, Raffaello Bonghi All rights reserved.
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of Officine Robotiche nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
--->
+
 <robot name="plutarco">
 	<!-- Base link position -->
 	<link name="base_link">
 		<visual>
-			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.06" />
+			<!-- <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.06" /> -->
+			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.24"/>
 			<geometry>
-				<box size="0.89 0.35 0.16"/>
+				<!-- <cylinder length="0.06" radius="0.07" />-->
+				<box size="0.55 0.89 0.24" />
 			</geometry>
 			<material name="blue">
-				<color rgba="0 1 0 0.5"/>
+				<color rgba="0 0 1 0.5"/>
 			</material>
 		</visual>
 	</link>
@@ -41,49 +20,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	<link name="left_wheel">
 		<visual>
 			<geometry>
-				<cylinder length="0.09" radius="0.105"/>
+				<cylinder length="0.06" radius="0.1"/>
 			</geometry>
 			<material name="black">
 				<color rgba="0 0 0 1"/>
 			</material>
 		</visual>
-    		<collision>
-      			<geometry>
-        			<cylinder length="0.02" radius="0.10"/>
-      			</geometry>
-    		</collision>
+    <collision>
+      <geometry>
+	<cylinder length="0.06" radius="0.1"/>
+      </geometry>
+    </collision>
 	</link>
-
-	<!-- Right wheel link -->
-	<link name="right_wheel">
-		<visual>
-			<geometry>
-				<cylinder length="0.09" radius="0.105"/>
-			</geometry>
-			<material name="green">
-				<color rgba="0 0 0 1"/>
-			</material>
-		</visual>
-    		<collision>
-	      		<geometry>
-				<cylinder length="0.02" radius="0.05"/>
-	      		</geometry>
-    		</collision>
-	</link>
-
-
-
 	<!-- Joint configuration left joint -->
 	<joint name="left_joint" type="continuous">
 		<axis xyz="0 0 -1"/>
 		<parent link="base_link"/>
 		<child link="left_wheel"/>
-		<!-- <origin rpy="1.57075 0.0 0.0" xyz="-0.35 0.22 0"/> -->
-		<origin rpy="1.57075 0.0 0.0" xyz="0 0.22 0.05"/>
+		<origin rpy="1.57075 0.0 0.0" xyz="0 0.07 0.0365125"/>
 		<limit effort="2" velocity="10"/>
 		<joint_properties damping="0.02" friction="0.04"/>
 	</joint>
-
 	<!-- Transmission configuration left joint -->
 	<transmission name="$left_trans" type="SimpleTransmission">
 		<type>transmission_interface/SimpleTransmission</type>
@@ -95,19 +52,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</joint>
 	</transmission>
 
-
-
-
-
-
-
+	<!-- Right wheel link -->
+	<link name="right_wheel">
+		<visual>
+			<geometry>
+				<cylinder length="0.06" radius="0.1"/>
+			</geometry>
+			<material name="black">
+				<color rgba="0 0 0 1"/>
+			</material>
+		</visual>
+    <collision>
+      <geometry>
+	<cylinder length="0.06" radius="0.1"/>
+      </geometry>
+    </collision>
+	</link>
 	<!-- Joint configuration left joint -->
 	<joint name="right_joint" type="continuous">
 		<axis xyz="0 0 -1"/>
 		<parent link="base_link"/>
 		<child link="right_wheel"/>
-		<!-- <origin rpy="1.57075 0.0 0.0" xyz="-0.35 -0.22 0"/>  -->
-		<origin rpy="1.57075 0.0 0.0" xyz="0 -0.22 0.05"/>
+		<origin rpy="1.57075 0.0 0.0" xyz="0 -0.07 0.0365125"/>
 		<limit effort="2" velocity="10"/>
 		<joint_properties damping="0.02" friction="0.04"/>
 	</joint>
@@ -122,4 +88,89 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</joint>
 	</transmission>
 
+
+<!-- realsense tf -->
+	<link name="camera_link">
+		<visual>
+			<geometry>
+				<box size="0.01 0.14 0.02" />
+			</geometry>
+			<material name="black">
+				<color rgba="0 0 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="0.01 0.14 0.02" />
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="camera_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="camera_link"/>
+		<origin rpy="0.0 0.0 0.0" xyz="0.045 0.00 0.094"/>
+	</joint>
+<!-- -->
+
+<!-- imu tf -->
+	<link name="imu_link">
+		<visual>
+			<geometry>
+				<box size="0.02 0.03 0.005" />
+			</geometry>
+			<material name="black">
+				<color rgba="0 0 0 1"/>
+			</material>
+		</visual>
+		<collision>
+			<geometry>
+				<box size="0.02 0.03 0.005" />
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="imu_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="imu_link"/>
+		<origin rpy="0.0 0.0 0.0" xyz="-0.025 0.05 0.11"/>
+	</joint>
+<!-- -->
+
+<!-- YD lidar -->
+	<link name="ydlidar_link">
+	<visual>
+		<geometry>
+			<cylinder length="0.06" radius="0.035" />
+		</geometry>
+		<origin xyz="0 0 0.03" />
+		<material name="kkk">
+			<color rgba="0 0 0 1" />
+		</material>
+	</visual>
+	</link>
+	<joint name="base_link_to_base_laser_yd" type="fixed">
+		<parent link="base_link"/>
+		<child link="ydlidar_link"/>
+		<origin xyz="-0.07 0.12 0.38" rpy="0 0 -1.5708" />
+	</joint>	
+
+
+<!--RP lidar -->
+	<link name="rplidar_link">
+	<visual>
+		<geometry>
+			<cylinder length="0.06" radius="0.035" />
+		</geometry>
+		<origin xyz="0 0 0.03" />
+		<material name="kkk">
+			<color rgba="0 0 0 1" />
+		</material>
+	</visual>
+	</link>
+	<joint name="base_link_to_base_laser_rp" type="fixed">
+		<parent link="base_link"/>
+		<child link="rplidar_link"/>
+		<origin xyz="-0.07 0 0.35" rpy="0 0 -1.5708" />
+	</joint>	
 </robot>
