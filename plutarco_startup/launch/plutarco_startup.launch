@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-Copyright (c) 2015, Raffaello Bonghi
+Copyright (c) 2018, Mauro Soligo
 All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -23,13 +23,27 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
+
 <launch>
 
-  <include file="$(find plutarco_demo)/launch/include/bringup.launch">
-    <!--  <arg name="imu_enabled" value="false"/>   -->
+<!--  <include file="$(find plutarco_description)/launch/description.launch">
+  </include>
+-->
+  <include file="$(find plutarco_control)/launch/driver.launch">
+  </include>  
+
+  <include file="$(find rplidar_ros)/launch/rplidar.launch">
+  </include>
+<!--
+  <include file="$(find ydlidar)/launch/lidar.launch">
+  </include>
+-->
+  <include file="$(find zed_wrapper)/launch/zed.launch">
   </include>
 
-  <!--<node name="wandering" pkg="ros_robot_wandering_demo" type="robot_wandering_node" /> -->
+  <include file="$(find bosch_imu_driver)/launch/imu.launch">
+  </include>
 
-
+  <include file="$(find ros_rs_sensor_board)/launch/rs_sensor_board.launch">
+  </include>
 </launch>
