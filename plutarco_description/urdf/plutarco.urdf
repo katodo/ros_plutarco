@@ -1,20 +1,38 @@
 <?xml version="1.0"?>
 
 <robot name="plutarco">
-	<!-- Base link position -->
+
+	<!-- Base link position - central position of body top surface, electronic device level -->
 	<link name="base_link">
 		<visual>
-			<!-- <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.06" /> -->
-			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.24"/>
+			<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
 			<geometry>
-				<!-- <cylinder length="0.06" radius="0.07" />-->
-				<box size="0.89 0.55 0.24" />
+				<cylinder length="0.001" radius="0.03" />
 			</geometry>
 			<material name="blue">
 				<color rgba="0 0 1 0.5"/>
 			</material>
 		</visual>
 	</link>
+
+	<link name="body_main">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://plutarco_description/urdf/models/Body.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="light_grey">
+                <color rgba="0.8 0.8 0.8 0.8"/>
+            </material>
+        </visual>
+    </link>
+
+	<joint name="body_main_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="body_main"/>
+		<origin rpy="1.5708 0.0 0.0" xyz="0.0 0.00 -0.14"/>
+	</joint>
+
 
 	<!-- Left wheel link -->
 	<link name="left_wheel">
@@ -38,7 +56,7 @@
 		<axis xyz="0 0 -1"/>
 		<parent link="base_link"/>
 		<child link="left_wheel"/>
-		<origin rpy="1.57075 0.0 0.0" xyz="0 0.28 0.0365125"/>
+		<origin rpy="1.57075 0.0 0.0" xyz="0 0.28 -0.17"/>
 		<limit effort="2" velocity="10"/>
 		<joint_properties damping="0.02" friction="0.04"/>
 	</joint>
@@ -76,7 +94,7 @@
 		<axis xyz="0 0 -1"/>
 		<parent link="base_link"/>
 		<child link="right_wheel"/>
-		<origin rpy="1.57075 0.0 0.0" xyz="0 -0.28 0.0365125"/>
+		<origin rpy="1.57075 0.0 0.0" xyz="0 -0.28 -0.17"/>
 		<limit effort="2" velocity="10"/>
 		<joint_properties damping="0.02" friction="0.04"/>
 	</joint>
@@ -91,31 +109,6 @@
 			<hardwareInterface>VelocityJointInterface</hardwareInterface>
 		</joint>
 	</transmission>
-
-
-<!-- realsense tf -->
-	<link name="ZED_center">
-		<visual>
-			<geometry>
-				<box size="0.01 0.14 0.02" />
-			</geometry>
-			<material name="black">
-				<color rgba="0 0 0 1"/>
-			</material>
-		</visual>
-		<collision>
-			<geometry>
-				<box size="0.01 0.14 0.02" />
-			</geometry>
-		</collision>
-	</link>
-
-	<joint name="camera_joint" type="fixed">
-		<parent link="base_link"/>
-		<child link="ZED_center"/>
-		<origin rpy="0.0 0.0 0.0" xyz="0.045 0.00 0.094"/>
-	</joint>
-<!-- -->
 
 <!-- imu tf -->
 	<link name="imu_link">
@@ -175,6 +168,7 @@
 	<joint name="base_link_to_base_laser_rp" type="fixed">
 		<parent link="base_link"/>
 		<child link="rplidar_link"/>
-		<origin xyz="-0.07 0 0.35" rpy="0 0 -1.5708" />
+		<!-- <origin xyz="-0.07 0 0.35" rpy="0 0 -1.5708" /> --> <!-- Ruota di -90°, -1,5708 rad -->
+		<origin xyz="-0.07 0 0.35" rpy="0 0 0" />
 	</joint>	
 </robot>
