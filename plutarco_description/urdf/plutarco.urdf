@@ -30,9 +30,28 @@
 	<joint name="body_main_joint" type="fixed">
 		<parent link="base_link"/>
 		<child link="body_main"/>
-		<origin rpy="1.5708 0.0 0.0" xyz="0.0 0.00 -0.14"/>
+		<!--  <origin rpy="1.5708 0.0 1.5708" xyz="0.0 0.0 0.0"/>  -->
+		<origin rpy="1.5708 0.0 1.5708" xyz="0.0 0.0 0.0"/> 
 	</joint>
 
+  
+	<link name="plutarco_head">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://plutarco_description/urdf/models/Plutarco_Head.stl" scale="0.001 0.001 0.001" />
+            </geometry>
+            <material name="light_grey">
+                <color rgba="0.8 0.8 0.8 0.8"/>
+            </material>
+        </visual>
+    </link>
+
+	<joint name="plutarco_head_joint" type="fixed">
+		<parent link="body_main"/>
+		<child link="plutarco_head"/>
+		<origin rpy="0.0 0.0 0.0" xyz="0.0 0.23 -0.05"/>
+	</joint>
 
 	<!-- Left wheel link -->
 	<link name="left_wheel">
@@ -130,11 +149,12 @@
 	<joint name="imu_joint" type="fixed">
 		<parent link="base_link"/>
 		<child link="imu_link"/>
-		<origin rpy="0.0 0.0 0.0" xyz="-0.025 0.05 0.11"/>
+		<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
 	</joint>
 <!-- -->
 
 <!-- YD lidar -->
+<!--
 	<link name="ydlidar_link">
 	<visual>
 		<geometry>
@@ -150,7 +170,8 @@
 		<parent link="base_link"/>
 		<child link="ydlidar_link"/>
 		<origin xyz="-0.07 0.12 0.38" rpy="0 0 -1.5708" />
-	</joint>	
+	</joint>
+	 -->	
 
 
 <!--RP lidar -->
@@ -159,7 +180,7 @@
 		<geometry>
 			<cylinder length="0.06" radius="0.035" />
 		</geometry>
-		<origin xyz="0 0 0.03" />
+		<origin xyz="0 0 0" />
 		<material name="kkk">
 			<color rgba="0 0 0 1" />
 		</material>
@@ -169,6 +190,6 @@
 		<parent link="base_link"/>
 		<child link="rplidar_link"/>
 		<!-- <origin xyz="-0.07 0 0.35" rpy="0 0 -1.5708" /> --> <!-- Ruota di -90°, -1,5708 rad -->
-		<origin xyz="-0.07 0 0.35" rpy="0 0 0" />
+		<origin xyz="-0.10 0.00 0.32" rpy="0 0 3.14159" />
 	</joint>	
 </robot>
