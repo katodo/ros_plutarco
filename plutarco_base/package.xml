@@ -18,7 +18,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roslaunch</build_depend>
 
-  <run_depend>plutarco_description</run_depend>
+  <run_depend>robot_description</run_depend>
   <run_depend>orbus_interface</run_depend>
 
 </package>

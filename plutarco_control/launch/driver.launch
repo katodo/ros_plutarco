@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <!-- Load robot description -->
     <!-- In this launch file are initialized the /robot_description and 
     the robot_state_publisher to show all information about the joints. -->
-    <include file="$(find plutarco_description)/launch/description.launch" />
+    <include file="$(find robot_description)/launch/description.launch" />
 
     <!-- ORBus hardware driver -->
     <node pkg="orbus_interface" type="unav_node" name="unav" output="screen">

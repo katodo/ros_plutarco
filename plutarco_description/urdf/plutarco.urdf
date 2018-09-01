@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="plutarco">
+<robot name="robot_description">
 
 	<!-- Base link position - central position of body top surface, electronic device level -->
 	<link name="base_link">
@@ -19,7 +19,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://plutarco_description/urdf/models/Body.stl" scale="0.001 0.001 0.001" />
+                <mesh filename="package://robot_description/urdf/models/Body.stl" scale="0.001 0.001 0.001" />
             </geometry>
             <material name="light_grey">
                 <color rgba="0.8 0.8 0.8 0.8"/>
@@ -39,7 +39,7 @@
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://plutarco_description/urdf/models/Plutarco_Head.stl" scale="0.001 0.001 0.001" />
+                <mesh filename="package://robot_description/urdf/models/Plutarco_Head.stl" scale="0.001 0.001 0.001" />
             </geometry>
             <material name="light_grey">
                 <color rgba="0.8 0.8 0.8 0.8"/>

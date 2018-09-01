@@ -26,14 +26,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 <launch>
 
-<!--  <include file="$(find plutarco_description)/launch/description.launch">
-  </include>
+<!--
 -->
   <include file="$(find plutarco_control)/launch/driver.launch">
-  </include>  
-
-  <include file="$(find rplidar_ros)/launch/rplidar.launch">
   </include>
+  <!--  description.launch call  driver.launch -->
+
+
+ <!-- <include file="$(find rplidar_ros)/launch/rplidar.launch">
+  </include>
+-->
 <!--
   <include file="$(find ydlidar)/launch/lidar.launch">
   </include>
