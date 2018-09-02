@@ -30,12 +30,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
   <include file="$(find plutarco_control)/launch/driver.launch">
   </include>
-  <!--  description.launch call  driver.launch -->
+  <!--  description.launch is called by driver.launch -->
 
 
- <!-- <include file="$(find rplidar_ros)/launch/rplidar.launch">
+  <include file="$(find rplidar_ros)/launch/rplidar.launch">
   </include>
--->
+
 <!--
   <include file="$(find ydlidar)/launch/lidar.launch">
   </include>
@@ -48,4 +48,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <include file="$(find ros_rs_sensor_board)/launch/rs_sensor_board.launch">
   </include>
+
+
+  <!--  Start rosserial node used for battery monitor -->
+  <node name="battery_monitor" pkg="rosserial_python" type="serial_node.py" output="screen">
+  <param name="port" value="/dev/monitor1" />
+  <param name="baud" value="57600" />
+  </node>
+
+
+
 </launch>
